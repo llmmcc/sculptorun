@@ -11,7 +11,13 @@ listen = "0.0.0.0:6665"
 ## Sculptor try to use ban list from it
 ## on Windows use double slash: "C:\\Servers\\1.20.1"
 # mcFolder = "~/minecraft_server"
-
+[
+offlineMode
+]
+# 是否允许离线账户登录（默认关闭）
+enabled = false
+# 离线UUID生成方式："username"（基于用户名哈希，兼容原版）或 "random"（随机）
+uuidMode = "username"
 ## Can't work without at least one provider!
 ## If not set, default providers (Mojang, ElyBy) will be provided.
 # authProviders = [
