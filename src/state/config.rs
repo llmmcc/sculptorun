@@ -7,6 +7,11 @@ use uuid::Uuid;
 use crate::auth::{default_authproviders, AuthProviders, Userinfo};
 
 #[derive(Deserialize, Clone, Debug, PartialEq)]
+pub struct OfflineModeConfig {
+    pub enabled: bool,
+    #[serde(rename = "uuidMode")]
+    pub uuid_mode: String,
+}
 #[serde(rename_all = "camelCase")]
 pub struct Config {
     pub listen: String,
@@ -22,6 +27,8 @@ pub struct Config {
     pub mc_folder: PathBuf,
     #[serde(default)]
     pub advanced_users: HashMap<Uuid, AdvancedUsers>,
+      #[serde(default)]
+    pub offline_mode: OfflineModeConfig,
 }
 
 #[derive(Deserialize, Clone, Debug, PartialEq)]
@@ -74,7 +81,14 @@ impl From<BannedPlayer> for Userinfo {
         }
     }
 }
-
+impl Default for OfflineModeConfig {
+    fn default() -> Self {
+        Self {
+            enabled: false,
+            uuid_mode: "username".to_string(),
+        }
+    }
+}
 impl Config {
     pub fn parse(path: PathBuf) -> Self {
         let mut file = std::fs::File::open(path).expect("Access denied or file doesn't exists!");
