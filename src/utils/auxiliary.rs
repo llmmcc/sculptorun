@@ -9,7 +9,19 @@ use uuid::Uuid;
 use chrono::prelude::*;
 
 use crate::{auth::Userinfo, state::{BannedPlayer, Config}, UManager};
-
+// 新增：离线模式UUID生成（基于用户名MD5哈希，兼容Minecraft离线模式）
+pub fn generate_offline_uuid(username: &str) -> Uuid {
+    use md5::compute;
+    let hash = compute(format!("OfflinePlayer:{}", username));
+    let mut bytes = [0u8; 16];
+    bytes.copy_from_slice(&hash[..16]);
+    // 修正UUID版本位（符合RFC 4122标准）
+    bytes[6] &= 0x0F;
+    bytes[6] |= 0x30; // 版本3
+    bytes[8] &= 0x3F;
+    bytes[8] |= 0x80; // RFC 4122变体
+    Uuid::from_bytes(bytes).expect("Failed to generate offline UUID")
+}
 pub fn rand() -> [u8; 50] {
     let mut rng = rng();
     let distr = rand::distr::Uniform::new_inclusive(0, 255).expect("rand() failure.");
