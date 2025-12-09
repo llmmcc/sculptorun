@@ -21,6 +21,7 @@ uuidMode = "username"
 ## Can't work without at least one provider!
 ## If not set, default providers (Mojang, ElyBy) will be provided.
 # authProviders = [
+#     { type = "offline", enabled = true },
 #     { name = "Mojang", url = "https://sessionserver.mojang.com/session/minecraft/hasJoined" },
 #     { name = "ElyBy", url = "https://account.ely.by/api/minecraft/session/hasJoined" },
 # ]
