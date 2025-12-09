@@ -1,0 +1,14 @@
+# Clone the pre-release
+git clone https://github.com/shiroyashik/sculptor.git
+# or clone specific version
+git clone --depth 1 --branch v0.4.0 https://github.com/shiroyashik/sculptor.git
+# Enter the folder
+cd sculptor
+# Copy Sculptor configuration file
+cp Config.example.toml Config.toml
+# Edit configuration file for your needs
+nano Config.toml
+# Build it in release mode for better performance
+cargo build --release
+# or run from cargo
+cargo run --release
